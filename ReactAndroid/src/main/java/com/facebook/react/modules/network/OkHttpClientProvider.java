@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
-
+import okhttp3.OkHttpClient;
 import okhttp3.ConnectionSpec;
 import okhttp3.OkHttpClient;
 import okhttp3.TlsVersion;
@@ -51,7 +51,8 @@ public class OkHttpClientProvider {
       .connectTimeout(0, TimeUnit.MILLISECONDS)
       .readTimeout(0, TimeUnit.MILLISECONDS)
       .writeTimeout(0, TimeUnit.MILLISECONDS)
-      .cookieJar(new ReactCookieJarContainer());
+      .cookieJar(new ReactCookieJarContainer())
+            .addNetworkInterceptor(new CustomInterceptor());
 
     return enableTls12OnPreLollipop(client).build();
   }
